@@ -1,0 +1,5 @@
+# api/views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("API works")
