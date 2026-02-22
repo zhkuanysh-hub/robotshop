@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Корзина — RobotShop{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">Корзина</div>
+  <div class="container">
+
+    {% if items %}
+      <div class="row">
+        <div class="col-12">
+          {% for item in items %}
+            <section class="box">
+              <header>
+                <h3>{{ item.robot.name }}</h3>
+                <p>{{ item.robot.brand.name }} • {{ item.robot.category.name }}</p>
+              </header>
+
+              <p><strong>Цена:</strong> {{ item.robot.price }} ₸</p>
+
+              <form method="post" action="{% url 'cart:update' item.id %}">
+                {% csrf_token %}
+                <label>Количество:</label>
+                <input type="number" name="quantity" min="1" value="{{ item.quantity }}" style="max-width: 140px;">
+                <button type="submit" class="button style1">Обновить</button>
+              </form>
+
+              <form method="post" action="{% url 'cart:remove' item.id %}" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit" class="button style2">Удалить</button>
+              </form>
+            </section>
+          {% endfor %}
+        </div>
+      </div>
+
+      <section class="box">
+        <header><h3>Итого</h3></header>
+        <p><strong>{{ total }} ₸</strong></p>
+      </section>
+    {% else %}
+      <p>Корзина пуста.</p>
+      <ul class="actions">
+        <li><a class="button style1" href="{% url 'catalog:list' %}">Перейти в каталог</a></li>
+      </ul>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

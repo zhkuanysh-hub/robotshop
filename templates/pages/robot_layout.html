@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% block robot_title %}Robot - RobotShop{% endblock %}{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">{% block robot_page_title %}Robot Details{% endblock %}</div>
+  <div class="container">
+    <div id="content">
+      {% block robot_content %}{% endblock %}
+    </div>
+  </div>
+</section>
+{% endblock %}

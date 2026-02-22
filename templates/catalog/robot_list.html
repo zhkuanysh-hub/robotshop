@@ -1,0 +1,91 @@
+{% extends "pages/catalog_layout.html" %}
+{% load static %}
+
+{% block title %}Catalog - RobotShop{% endblock %}
+{% block catalog_page_title %}Robot Catalog{% endblock %}
+
+{% block catalog_content %}
+<article class="box post">
+  <header class="style1">
+    <h2>Robot Catalog</h2>
+    <p>Find the right robot for home, business, or industry.</p>
+  </header>
+
+  <form method="get" class="row gtr-50">
+    <div class="col-9 col-12-small">
+      <input type="text" name="q" value="{{ q }}" placeholder="Search robots..." />
+    </div>
+    <div class="col-3 col-12-small">
+      <button type="submit" class="button style1 fit">Find</button>
+    </div>
+  </form>
+</article>
+
+<section>
+  {% for robot in page_obj %}
+    <article class="box post">
+      <div class="row gtr-50">
+        <div class="col-4 col-12-small">
+          <span class="image fit">
+            {% if robot.images.all %}
+              <img src="{{ robot.images.all.0.image_url }}" alt="{{ robot.name }}" />
+            {% else %}
+              <img src="{% static 'theme/images/pic02.jpg' %}" alt="{{ robot.name }}" />
+            {% endif %}
+          </span>
+        </div>
+        <div class="col-8 col-12-small">
+          <header>
+            <h3><a href="{% url 'catalog:detail' robot.slug %}">{{ robot.name }}</a></h3>
+            <p>{{ robot.brand.name }} | {{ robot.category.name }}</p>
+          </header>
+          <p>{{ robot.description|truncatechars:160 }}</p>
+          <ul class="actions">
+            <li><a class="button style1" href="{% url 'catalog:detail' robot.slug %}">Details</a></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  {% empty %}
+    <article class="box post">
+      <p>No robots found.</p>
+    </article>
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block catalog_sidebar %}
+<section class="box">
+  <header>
+    <h3>Search</h3>
+  </header>
+  <form method="get">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search robots..." />
+    <ul class="actions" style="margin-top: 1rem;">
+      <li><button type="submit" class="button style1 fit">Find</button></li>
+    </ul>
+  </form>
+</section>
+
+<section class="box">
+  <header>
+    <h3>Filters</h3>
+  </header>
+  <ul class="style3">
+    <li>Categories and filters can be added here.</li>
+    <li>Price range, brand, and availability.</li>
+    <li>Sorting and tags.</li>
+  </ul>
+</section>
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">←</a>
+    {% endif %}
+
+    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">→</a>
+    {% endif %}
+</div>
+{% endblock %}

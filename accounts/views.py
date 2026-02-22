@@ -1,5 +1,13 @@
+from django.shortcuts import render
 
-from django.http import HttpResponse
 
-def index(request):
-    return HttpResponse("Accounts works")
+def login_view(request):
+    return render(request, "pages/login.html")
+
+
+def register_view(request):
+    return render(request, "pages/register.html")
+
+
+def profile_view(request):
+    return render(request, "pages/profile.html")

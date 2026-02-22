@@ -1,0 +1,68 @@
+{% extends "pages/robot_layout.html" %}
+{% load static %}
+
+{% block robot_title %}{{ robot.name }} - RobotShop{% endblock %}
+{% block robot_page_title %}Robot Details{% endblock %}
+
+{% block robot_content %}
+<article class="box post">
+  <header class="style1">
+    <p><a href="{% url 'catalog:list' %}">&larr; Back to catalog</a></p>
+    <h2>{{ robot.name }}</h2>
+    <p>{{ robot.brand.name }} | {{ robot.category.name }}</p>
+  </header>
+  
+<form method="post" action="{% url 'cart:add' robot.id %}">
+  {% csrf_token %}
+  <button type="submit" class="button style1">Добавить в корзину</button>
+</form>
+
+  <div class="row gtr-150">
+    <div class="col-6 col-12-medium">
+      <section class="box">
+        <header>
+          <h3>Overview</h3>
+        </header>
+        <p><strong>Price:</strong> {{ robot.price }}</p>
+        <p><strong>Stock:</strong> {{ robot.stock }}</p>
+        <p>{{ robot.description }}</p>
+      </section>
+    </div>
+    <div class="col-6 col-12-medium">
+      <section class="box">
+        <header>
+          <h3>Specifications</h3>
+        </header>
+        <ul class="style3">
+          {% for spec in robot.spec_values.all %}
+            <li>{{ spec.specification.name }}: {{ spec.value }} {{ spec.specification.unit }}</li>
+          {% empty %}
+            <li>No specifications yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </div>
+</article>
+
+<section class="box">
+  <header>
+    <h3>Images</h3>
+  </header>
+  <div class="row">
+    {% for image in robot.images.all %}
+      <div class="col-4 col-12-small">
+        <span class="image fit">
+          <img src="{{ image.image_url }}" alt="{{ image.alt_text|default:robot.name }}" />
+        </span>
+      </div>
+    {% empty %}
+      <div class="col-4 col-12-small">
+        <span class="image fit">
+          <img src="{% static 'theme/images/pic01.jpg' %}" alt="{{ robot.name }}" />
+        </span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

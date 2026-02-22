@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Catalog - RobotShop{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">{% block catalog_page_title %}Catalog{% endblock %}</div>
+  <div class="container">
+    <div class="row gtr-150">
+      <div class="col-8 col-12-medium">
+        <div id="content">
+          {% block catalog_content %}{% endblock %}
+        </div>
+      </div>
+      <div class="col-4 col-12-medium">
+        <div id="sidebar">
+          {% block catalog_sidebar %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
