@@ -5,7 +5,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     path("", include(("apps.core.urls", "core"), namespace="core")),
-
+    path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
     path("catalog/", include(("catalog.urls", "catalog"), namespace="catalog")),
     path("cart/", include(("cart.urls", "cart"), namespace="cart")),

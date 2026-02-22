@@ -11,11 +11,16 @@
     <h2>{{ robot.name }}</h2>
     <p>{{ robot.brand.name }} | {{ robot.category.name }}</p>
   </header>
-  
+
 <form method="post" action="{% url 'cart:add' robot.id %}">
   {% csrf_token %}
   <button type="submit" class="button style1">Добавить в корзину</button>
 </form>
+
+<p>
+Средний рейтинг:
+{{ robot.reviews.aggregate.avg_rating }}
+</p>
 
   <div class="row gtr-150">
     <div class="col-6 col-12-medium">

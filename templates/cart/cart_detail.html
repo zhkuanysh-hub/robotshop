@@ -44,7 +44,12 @@
         <li><a class="button style1" href="{% url 'catalog:list' %}">Перейти в каталог</a></li>
       </ul>
     {% endif %}
-
+<form method="post" action="{% url 'orders:checkout' %}">
+    {% csrf_token %}
+    <button type="submit" class="button style1">
+        Оформить заказ
+    </button>
+</form>
   </div>
 </section>
 {% endblock %}

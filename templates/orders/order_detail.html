@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">Заказ #{{ order.id }}</div>
+  <div class="container">
+
+    <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Сумма:</strong> {{ order.total_amount }} ₸</p>
+
+    <h3>Позиции:</h3>
+
+    {% for item in order.items.all %}
+        <section class="box">
+            <p>
+                {{ item.robot.name }}
+                × {{ item.quantity }}
+                — {{ item.unit_price }} ₸
+            </p>
+        </section>
+    {% endfor %}
+
+    <a href="{% url 'catalog:list' %}" class="button style1">
+        Вернуться в каталог
+    </a>
+
+  </div>
+</section>
+{% endblock %}

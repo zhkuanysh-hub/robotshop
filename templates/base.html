@@ -32,7 +32,13 @@
 <li><a href="{% url 'catalog:list' %}">Каталог</a></li>
 <li><a href="{% url 'accounts:login' %}">Вход</a></li>
 <li><a href="{% url 'wishlist:index' %}">Избранное</a></li>
-<li><a href="{% url 'cart:index' %}">Корзина</a></li>
+<li>
+    <a href="{% url 'cart:index' %}">
+        Корзина ({{ cart_items_count }})
+    </a>
+</li>
+<li><a href="{% url 'accounts:register' %}">Регистрация</a></li>
+<li><a href="{% url 'login' %}">Вход</a></li>
                                 <li>
                                     <a href="#">Dropdown</a>
                                     <ul>
