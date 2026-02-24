@@ -11,6 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'theme/assets/css/main.css' %}" />
+   
     </head>
     <body class="is-preload">
         <div id="page-wrapper">
@@ -34,11 +35,11 @@
 <li><a href="{% url 'wishlist:index' %}">Избранное</a></li>
 <li>
     <a href="{% url 'cart:index' %}">
-        Корзина ({{ cart_items_count }})
+        Корзина 
     </a>
 </li>
 <li><a href="{% url 'accounts:register' %}">Регистрация</a></li>
-<li><a href="{% url 'login' %}">Вход</a></li>
+
                                 <li>
                                     <a href="#">Dropdown</a>
                                     <ul>
@@ -162,12 +163,13 @@
 
         {% block scripts %}
         <!-- Scripts -->
-            <script src="{% static 'theme/assets/js/jquery.min.js' %}"></script>
-            <script src="{% static 'theme/assets/js/jquery.dropotron.min.js' %}"></script>
-            <script src="{% static 'theme/assets/js/browser.min.js' %}"></script>
-            <script src="{% static 'theme/assets/js/breakpoints.min.js' %}"></script>
-            <script src="{% static 'theme/assets/js/util.js' %}"></script>
-            <script src="{% static 'theme/assets/js/main.js' %}"></script>
+           
+       <script src="{% static 'theme/assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'theme/assets/js/jquery.dropotron.min.js' %}"></script>
+<script src="{% static 'theme/assets/js/browser.min.js' %}"></script>
+<script src="{% static 'theme/assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'theme/assets/js/util.js' %}"></script>
+<script src="{% static 'theme/assets/js/main.js' %}"></script>
         {% endblock %}
 
     </body>

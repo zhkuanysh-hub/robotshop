@@ -7,3 +7,5 @@ def home(request):
 def about(request):
     return render(request, "pages/about.html")
 
+def login_page(request):
+    return render(request, "pages/login_np.html")

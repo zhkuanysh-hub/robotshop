@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">Вход</div>
+  <div class="container">
+
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div class="row gtr-50">
+        <div class="col-12">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Введите логин" required>
+        </div>
+
+        <div class="col-12">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Введите пароль" required>
+        </div>
+
+        <div class="col-12">
+          <input type="checkbox" name="remember">
+          <label>Запомнить меня</label>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="button style1 fit">
+            Войти
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <hr>
+
+    <p>
+      <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+    </p>
+
+    <p>
+      Нет аккаунта?
+      <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+    </p>
+
+  </div>
+</section>
+{% endblock %}

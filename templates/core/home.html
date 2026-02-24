@@ -1,9 +1,48 @@
-﻿{% load static %}
-{% extends "base.html" %}
-
-{% block title %}Р“Р»Р°РІРЅР°СЏ вЂ” RobotShop{% endblock %}
+﻿{% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <h1>RobotShop</h1>
-  <p>РћРЅР»Р°Р№РЅ-РјР°РіР°Р·РёРЅ СЂРѕР±РѕС‚РѕРІ Р±СѓРґСѓС‰РµРіРѕ.</p>
+
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1>
+            <a href="{% url 'core:home' %}">RobotShop</a>
+        </h1>
+        <nav class="links">
+            <ul>
+                <li><a href="{% url 'catalog:list' %}">Каталог</a></li>
+                <li><a href="{% url 'cart:index' %}">Корзина</a></li>
+                <li><a href="{% url 'orders:list' %}">Заказы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+        <article class="post">
+            <header>
+                <div class="title">
+                    <h2>Добро пожаловать в RobotShop</h2>
+                    <p>Магазин роботов будущего</p>
+                </div>
+            </header>
+
+            <p>
+                Лучшие роботы для дома, работы и бизнеса.
+            </p>
+
+            <ul class="actions">
+                <li>
+                    <a href="{% url 'catalog:list' %}" class="button large">
+                        Перейти в каталог
+                    </a>
+                </li>
+            </ul>
+        </article>
+    </div>
+
+</div>
+
 {% endblock %}

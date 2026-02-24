@@ -7,3 +7,4 @@ urlpatterns = [
     path("", views.robot_list, name="list"),
     path("<slug:slug>/", views.robot_detail, name="detail"),
 ]
+
