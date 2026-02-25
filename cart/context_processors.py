@@ -8,7 +8,14 @@ def cart_info(request):
         else:
             count = 0
     else:
+        session_cart = request.session.get("cart", {})
+        items = session_cart.get("items", {})
         count = 0
+        for qty in items.values():
+            try:
+                count += int(qty)
+            except (TypeError, ValueError):
+                continue
 
     return {
         "cart_items_count": count

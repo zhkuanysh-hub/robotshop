@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Статистика брендов{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">Статистика</div>
+  <div class="container">
+    <header class="style1" style="text-align: center;">
+      <h2>Количество роботов по брендам</h2>
+    </header>
+
+    <style>
+      .stats-controls {
+        margin: 0 0 1.5rem;
+      }
+      .stats-sort-link {
+        text-decoration: none;
+        margin-right: 0.75rem;
+      }
+      .stats-sort-link.is-active {
+        font-weight: 700;
+        border-bottom: 2px solid currentColor;
+      }
+      .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .stats-table th,
+      .stats-table td {
+        padding: 12px 10px;
+      }
+      .col-name {
+        text-align: left;
+      }
+      .col-count {
+        text-align: right;
+        width: 200px;
+      }
+      .stats-table thead th {
+        font-weight: 600;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      }
+      .stats-table tbody tr:nth-child(even) {
+        background: rgba(0, 0, 0, 0.03);
+      }
+      .stats-table tbody tr:hover {
+        background: rgba(0, 0, 0, 0.06);
+      }
+      .stats-table tfoot td {
+        font-weight: 700;
+      }
+    </style>
+
+    <section class="box">
+      <div class="stats-controls">
+        Сортировать:
+        <a href="{% url 'core:stats' %}?sort=count" class="stats-sort-link {% if current_sort == 'count' %}is-active{% endif %}">по количеству</a>
+        <a href="{% url 'core:stats' %}?sort=name" class="stats-sort-link {% if current_sort == 'name' %}is-active{% endif %}">по имени</a>
+      </div>
+
+      {% if chart_labels %}
+        <div style="margin-bottom: 2rem;">
+          <canvas id="brandStatsChart" height="120"></canvas>
+        </div>
+      {% endif %}
+
+      <div class="table-wrapper">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th class="col-name">Бренд</th>
+              <th class="col-count">Количество роботов</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for brand in brands %}
+              <tr>
+                <td class="col-name">{{ brand.name }}</td>
+                <td class="col-count">{{ brand.robot_count }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="2">Нет данных</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="col-name">Итого роботов</td>
+              <td class="col-count">{{ total_robots }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>
+
+{{ chart_labels|json_script:"brand-chart-labels" }}
+{{ chart_values|json_script:"brand-chart-values" }}
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  {% if chart_labels %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      (function () {
+        const labels = JSON.parse(document.getElementById("brand-chart-labels").textContent);
+        const values = JSON.parse(document.getElementById("brand-chart-values").textContent);
+        const ctx = document.getElementById("brandStatsChart");
+        if (!ctx) return;
+
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [{
+              label: "Количество роботов",
+              data: values,
+              backgroundColor: "rgba(233, 119, 112, 0.85)",
+              borderColor: "rgba(233, 119, 112, 1)",
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { precision: 0 }
+              }
+            }
+          }
+        });
+      })();
+    </script>
+  {% endif %}
+{% endblock %}

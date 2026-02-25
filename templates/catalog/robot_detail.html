@@ -1,5 +1,5 @@
 {% extends "pages/robot_layout.html" %}
-{% load static %}
+{% load static filters %}
 
 {% block robot_title %}{{ robot.name }} - RobotShop{% endblock %}
 {% block robot_page_title %}Robot Details{% endblock %}
@@ -12,15 +12,19 @@
     <p>{{ robot.brand.name }} | {{ robot.category.name }}</p>
   </header>
 
-<form method="post" action="{% url 'cart:add' robot.id %}">
-  {% csrf_token %}
-  <button type="submit" class="button style1">Добавить в корзину</button>
-</form>
+  <form method="post" action="{% url 'cart:add' robot.id %}">
+    {% csrf_token %}
+    <button type="submit" class="button style1">Добавить в корзину</button>
+  </form>
 
-<p>
-Средний рейтинг:
-{{ robot.reviews.aggregate.avg_rating }}
-</p>
+  <p>
+    Средний рейтинг:
+    {% if avg_rating %}
+      {{ avg_rating|floatformat:1 }}
+    {% else %}
+      Нет оценок
+    {% endif %}
+  </p>
 
   <div class="row gtr-150">
     <div class="col-6 col-12-medium">
@@ -28,7 +32,7 @@
         <header>
           <h3>Overview</h3>
         </header>
-        <p><strong>Price:</strong> {{ robot.price }}</p>
+        <p><strong>Price:</strong> {{ robot.price|money }}</p>
         <p><strong>Stock:</strong> {{ robot.stock }}</p>
         <p>{{ robot.description }}</p>
       </section>

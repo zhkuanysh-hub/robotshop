@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+  <h1>Blog</h1>
+  <p>Список постов (заглушка)</p>
+  <ul>
+    <li><a href="{% url 'blog:detail' slug='first-post' %}">First post</a></li>
+  </ul>
+{% endblock %}

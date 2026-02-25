@@ -1628,10 +1628,10 @@ input, select, textarea {
 	input[type="reset"],
 	button,
 	.button {
-		-moz-transition: all .25s ease-in-out;
-		-webkit-transition: all .25s ease-in-out;
-		-ms-transition: all .25s ease-in-out;
-		transition: all .25s ease-in-out;
+		-moz-transition: transform 0.2s ease, box-shadow 0.2s ease;
+		-webkit-transition: transform 0.2s ease, box-shadow 0.2s ease;
+		-ms-transition: transform 0.2s ease, box-shadow 0.2s ease;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
 		display: inline-block;
 		background: #444;
 		text-align: center;
@@ -1658,6 +1658,16 @@ input, select, textarea {
 			background-color: #f98780;
 		}
 
+		.button:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+		}
+
+		.button:active {
+			transform: translateY(0);
+			box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+		}
+
 		input[type="button"].large,
 		input[type="submit"].large,
 		input[type="reset"].large,
@@ -1671,7 +1681,8 @@ input, select, textarea {
 		input[type="submit"].style1,
 		input[type="reset"].style1,
 		button.style1,
-		.button.style1 {
+		.button.style1,
+		.button.primary {
 			background: #e97770 url("images/overlay.png");
 			color: #fff;
 		}
@@ -1680,7 +1691,8 @@ input, select, textarea {
 			input[type="submit"].style1:hover,
 			input[type="reset"].style1:hover,
 			button.style1:hover,
-			.button.style1:hover {
+			.button.style1:hover,
+			.button.primary:hover {
 				background-color: #f98780;
 			}
 
@@ -1688,7 +1700,8 @@ input, select, textarea {
 			input[type="submit"].style1:active,
 			input[type="reset"].style1:active,
 			button.style1:active,
-			.button.style1:active {
+			.button.style1:active,
+			.button.primary:active {
 				background-color: #d96760;
 			}
 
@@ -2983,3 +2996,43 @@ input, select, textarea {
 						}
 
 	}
+
+/* Cart actions */
+.cart-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	max-width: 320px;
+	margin-top: 1.5rem;
+}
+
+.cart-actions form {
+	margin: 0;
+}
+
+.cart-actions .button {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+@media screen and (max-width: 736px) {
+	.cart-actions {
+		max-width: 100%;
+	}
+}
+
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 25px !important;
+    margin-top: 40px;
+    max-width: 360px;
+}
+
+.cart-actions .button {
+    width: 100%;
+    text-align: center;
+}
+
+

@@ -1,7 +1,10 @@
 from decimal import Decimal
+from decimal import InvalidOperation
+import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import DatabaseError
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -10,6 +13,8 @@ from catalog.models import Robot
 from accounts.models import Address
 
 from .models import Order, OrderItem, OrderStatusHistory
+
+logger = logging.getLogger("robotshop")
 
 
 @login_required
@@ -20,7 +25,24 @@ def order_list(request):
 
 @login_required
 def order_detail(request, pk):
-    order = get_object_or_404(Order, pk=pk, user=request.user)
+    try:
+        order = get_object_or_404(
+            Order.objects.prefetch_related("items__robot"),
+            pk=pk,
+            user=request.user,
+        )
+    except (InvalidOperation, DatabaseError):
+        logger.error(
+            "Failed to load order detail due to invalid decimal data. order_id=%s user_id=%s",
+            pk,
+            request.user.id,
+            exc_info=True,
+        )
+        messages.error(
+            request,
+            "Не удалось открыть заказ из-за некорректных данных суммы. Попробуйте позже.",
+        )
+        return redirect("orders:list")
     return render(request, "orders/order_detail.html", {"order": order})
 
 
@@ -58,7 +80,20 @@ def checkout(request):
             )
             return redirect("cart:index")
 
-        total += robot.price * item.quantity
+        unit_price = robot.price or Decimal("0.00")
+        total += unit_price * item.quantity
+
+    if total < Decimal("0.00") or total > Decimal("99999999.99"):
+        logger.error(
+            "Order total out of bounds. user_id=%s total=%s",
+            request.user.id,
+            total,
+        )
+        messages.error(
+            request,
+            "Сумма заказа превышает допустимый предел. Измените количество товаров.",
+        )
+        return redirect("cart:index")
 
     # Создаём заказ
     order = Order.objects.create(
@@ -83,7 +118,7 @@ def checkout(request):
             order=order,
             robot=robot,
             quantity=item.quantity,
-            unit_price=robot.price,
+            unit_price=robot.price or Decimal("0.00"),
         )
 
         robot.stock -= item.quantity

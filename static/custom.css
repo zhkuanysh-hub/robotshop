@@ -1,0 +1,15 @@
+#nav li.is-active > a,
+#nav a.is-active,
+#nav ul li.current > a,
+#nav ul li.active > a {
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid #fff !important;
+    padding-bottom: 2px;
+}
+
+#nav li.is-active {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 6px;
+}

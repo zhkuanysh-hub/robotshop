@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}500 - Server Error{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">500</div>
+  <div class="container">
+    <section class="box">
+      <header>
+        <h2>Server Error</h2>
+      </header>
+      <p>Something went wrong on our side. Please try again later.</p>
+      <ul class="actions">
+        <li><a href="{% url 'core:home' %}" class="button style1">На главную</a></li>
+      </ul>
+    </section>
+  </div>
+</section>
+{% endblock %}

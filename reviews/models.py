@@ -17,7 +17,8 @@ class Review(TimeStampedModel):
         related_name="reviews",
     )
     rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        default=5,
     )
     title = models.CharField(max_length=120, blank=True)
     comment = models.TextField(blank=True)

@@ -1,5 +1,5 @@
 {% extends "pages/catalog_layout.html" %}
-{% load static %}
+{% load static filters %}
 
 {% block title %}Catalog - RobotShop{% endblock %}
 {% block catalog_page_title %}Robot Catalog{% endblock %}
@@ -38,6 +38,7 @@
           <header>
             <h3><a href="{% url 'catalog:detail' robot.slug %}">{{ robot.name }}</a></h3>
             <p>{{ robot.brand.name }} | {{ robot.category.name }}</p>
+            <p><strong>Price:</strong> {{ robot.price|money }}</p>
           </header>
           <p>{{ robot.description|truncatechars:160 }}</p>
           <ul class="actions">

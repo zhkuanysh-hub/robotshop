@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<section id="main" class="wrapper style2">
+  <div class="title">Мои заказы</div>
+  <div class="container">
+    {% if orders %}
+      <section class="box">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Номер</th>
+                <th>Дата</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+                <tr>
+                  <td>#{{ order.id }}</td>
+                  <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                  <td>{{ order.get_status_display }}</td>
+                  <td>{{ order.total_amount }} ₸</td>
+                  <td><a href="{% url 'orders:detail' order.id %}" class="button">Подробнее</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    {% else %}
+      <section class="box">
+        <p>У вас пока нет заказов.</p>
+        <a href="{% url 'catalog:list' %}" class="button style1">Перейти в каталог</a>
+      </section>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

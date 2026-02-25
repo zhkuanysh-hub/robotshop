@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 
 urlpatterns = [
@@ -16,4 +18,8 @@ urlpatterns = [
     path("payments/", include(("payments.urls", "payments"), namespace="payments")),
     path("shipping/", include(("shipping.urls", "shipping"), namespace="shipping")),
     path("api/", include(("api.urls", "api"), namespace="api")),
+    path("blog/", include(("apps.blog.urls", "blog"), namespace="blog")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=str(settings.BASE_DIR / "static"))

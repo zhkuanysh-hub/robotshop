@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Корзина — RobotShop{% endblock %}
+{% block title %}Корзина - RobotShop{% endblock %}
 
 {% block content %}
 <section id="main" class="wrapper style2">
@@ -40,16 +40,16 @@
       </section>
     {% else %}
       <p>Корзина пуста.</p>
-      <ul class="actions">
-        <li><a class="button style1" href="{% url 'catalog:list' %}">Перейти в каталог</a></li>
-      </ul>
     {% endif %}
-<form method="post" action="{% url 'orders:checkout' %}">
-    {% csrf_token %}
-    <button type="submit" class="button style1">
-        Оформить заказ
-    </button>
-</form>
+
+    <div class="cart-actions">
+      <a class="button primary" href="{% url 'catalog:list' %}">Перейти в каталог</a>
+      <form method="post" action="{% url 'orders:checkout' %}">
+        {% csrf_token %}
+        <button type="submit" class="button">Оформить заказ</button>
+      </form>
+    </div>
+
   </div>
 </section>
 {% endblock %}

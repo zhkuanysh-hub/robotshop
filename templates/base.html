@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 {% load static %}
 <!--
     Escape Velocity by HTML5 UP
@@ -7,10 +7,11 @@
 -->
 <html>
     <head>
-        <title>{% block title %}Escape Velocity by HTML5 UP{% endblock %}</title>
         <meta charset="utf-8" />
+        <title>{% block title %}Escape Velocity by HTML5 UP{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'theme/assets/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'custom.css' %}" />
    
     </head>
     <body class="is-preload">
@@ -28,39 +29,52 @@
 
                     <!-- Nav -->
                         <nav id="nav">
+                            {% with path=request.path %}
                             <ul>
-                                <li><a href="{% url 'core:home' %}">Главная</a></li>
-<li><a href="{% url 'catalog:list' %}">Каталог</a></li>
-<li><a href="{% url 'accounts:login' %}">Вход</a></li>
-<li><a href="{% url 'wishlist:index' %}">Избранное</a></li>
-<li>
-    <a href="{% url 'cart:index' %}">
-        Корзина 
-    </a>
-</li>
-<li><a href="{% url 'accounts:register' %}">Регистрация</a></li>
+                                <li class="{% if path == '/' %}is-active{% endif %}">
+                                    <a href="{% url 'core:home' %}" class="{% if path == '/' %}is-active{% endif %}">Главная</a>
+                                </li>
+                                <li class="{% if '/catalog/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'catalog:list' %}" class="{% if '/catalog/' in path %}is-active{% endif %}">Каталог</a>
+                                </li>
+                                <li class="{% if '/cart/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'cart:index' %}" class="{% if '/cart/' in path %}is-active{% endif %}">Корзина{% if cart_items_count %} ({{ cart_items_count }}){% endif %}</a>
+                                </li>
+                                <li class="{% if '/wishlist/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'wishlist:index' %}" class="{% if '/wishlist/' in path %}is-active{% endif %}">Избранное</a>
+                                </li>
+                                <li class="{% if '/orders/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'orders:list' %}" class="{% if '/orders/' in path %}is-active{% endif %}">Заказы</a>
+                                </li>
+                                {% if request.user.is_staff %}
+                                <li class="{% if '/stats/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'core:stats' %}" class="{% if '/stats/' in path %}is-active{% endif %}">Статистика</a>
+                                </li>
+                                {% endif %}
+                                <li class="{% if '/blog/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'blog:list' %}" class="{% if '/blog/' in path %}is-active{% endif %}">Blog</a>
+                                </li>
 
-                                <li>
-                                    <a href="#">Dropdown</a>
+                                <li class="{% if '/info/' in path or '/about/' in path or '/contacts/' in path or '/delivery/' in path or '/privacy/' in path or '/terms/' in path or '/faq/' in path %}is-active{% endif %}">
+                                    <a href="#" class="{% if '/info/' in path or '/about/' in path or '/contacts/' in path or '/delivery/' in path or '/privacy/' in path or '/terms/' in path or '/faq/' in path %}is-active{% endif %}">Инфо</a>
                                     <ul>
-                                        <li><a href="#">Lorem ipsum</a></li>
-                                        <li><a href="#">Magna veroeros</a></li>
-                                        <li><a href="#">Etiam nisl</a></li>
-                                        <li>
-                                            <a href="#">Sed consequat</a>
-                                            <ul>
-                                                <li><a href="#">Lorem dolor</a></li>
-                                                <li><a href="#">Amet consequat</a></li>
-                                                <li><a href="#">Magna phasellus</a></li>
-                                                <li><a href="#">Etiam nisl</a></li>
-                                                <li><a href="#">Sed feugiat</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Nisl tempus</a></li>
+                                        <li><a href="{% url 'core:about' %}">О нас</a></li>
+                                        <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                                        <li><a href="{% url 'core:delivery' %}">Доставка</a></li>
+                                        <li><a href="{% url 'core:privacy' %}">Политика конфиденциальности</a></li>
+                                        <li><a href="{% url 'core:terms' %}">Условия использования</a></li>
+                                        <li><a href="{% url 'core:faq' %}">FAQ</a></li>
+                                        <li><a href="{% url 'core:blog' %}">Блог</a></li>
                                     </ul>
                                 </li>
-                
+                                <li class="{% if '/accounts/login/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'accounts:login' %}" class="{% if '/accounts/login/' in path %}is-active{% endif %}">Вход</a>
+                                </li>
+                                <li class="{% if '/accounts/register/' in path %}is-active{% endif %}">
+                                    <a href="{% url 'accounts:register' %}" class="{% if '/accounts/register/' in path %}is-active{% endif %}">Регистрация</a>
+                                </li>
                             </ul>
+                            {% endwith %}
                         </nav>
 
                 </section>

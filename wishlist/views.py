@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("Wishlist page")
+    return render(request, "pages/wishlist.html")
